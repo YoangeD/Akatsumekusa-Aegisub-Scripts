@@ -30,53 +30,45 @@ preset_dir = "?user/ShapePrototype"
 -- DEALINGS IN THE SOFTWARE.
 -- ---------------------------------------------------------------------------
 
-export script_name = "ShapePrototype"
-export script_description = "A test project aimed at recreating the LOGO of gekijōban anime Drifting Home"
-export script_version = "0.1~a1"
-export script_author = "Akatsumekusa"
-export script_namespace = "aka.ShapePrototype"
-
--- Basic data structure for shape
-ControlPoint = {
-    -- prev and next may refer to the previous and the next control point in
-    -- the shape, or they could instead be a string containing the unparsed ASS
-    -- drawing commands before or after the control point.
-    -- The first and the last control point in a shape will have their prev or
-    -- next as an empty string.
-    prev = nil,
-    next = nil,
-
-    -- A ASS drawing command like this
-    -- m 100 100 l 200 100 b 200 155.23 155.23 200 100 200 l 100 100
-    -- will be parse into four control points like this
-    -- point_1 = {
-    --     pos = {x = 100, y = 100}
-    --     -- last_bezier_point and next_bezier_point will not be declared and
-    --     -- will thus be nil
-    -- }
-    -- point_2 = {
-    --     pos = {x = 200, y = 100},
-    --     next_bezier_point = {x = 200, y = 155.23}
-    -- }
-    -- point_3 = {
-    --     pos = {x = 100, y = 200},
-    --     last_bezier_point = {x = 155.23, y = 200}
-    -- }
-    -- point_4 = {
-    --     pos = {x = 100, y = 100}
-    -- }
-    pos = {x = nil, y = nil},
-    last_bezier_point = {x = nil, y = nil},
-    next_bezier_point = {x = nil, y = nil}
-}
+script_name = "ShapePrototype"
+script_description = "A test project aimed at recreating the LOGO of gekijōban anime Drifting Home"
+script_version = "0.1~a1"
+script_author = "Akatsumekusa"
+script_namespace = "aka.ShapePrototype"
 
 function runGUI(subtitles, selected_lines, active_line)
+    -- loadSettings()
+    -- inline renderGUI()
+    -- saveSettings()
+
+    process()
+    -- inline setUndoPoint()
 end
 function runLastClockwise(subtitles, selected_lines, active_line)
+    -- loadSettings()
+    -- inline setChirarity()
+
+    process()
+    -- inline setUndoPoint()
 end
 function runLastCounterwise(subtitles, selected_lines, active_line)
+    -- loadSettings()
+    -- inline setChirarity()
+
+    process()
+    -- inline setUndoPoint()
+end
+
+function process(settings, subtitles, selected_lines, active_line)
+    -- for line in selected_lines do
+    --     preprocess() -- count the nodes and add the marks
+    --     validate() -- isCounterwise isComplete
+    --     parse()
+    --     interpret()
+    --     postprocess()
+    -- end
 end
 
 aegisub.register_macro(script_name .. "/" .. script_name, script_description, runGUI)
 aegisub.register_macro(script_name .. "/Run the last commands clockwise", "Run the last used commands clockwise", runLastClockwise)
-aegisub.register_macro(script_name .. "/Run the last commands counterwise", "Run the last used commands counterwise", script_description, runLastCounterwise)
+aegisub.register_macro(script_name .. "/Run the last commands counterwise", "Run the last used commands counterwise", runLastCounterwise)

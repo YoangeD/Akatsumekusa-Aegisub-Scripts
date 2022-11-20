@@ -1,4 +1,4 @@
--- config.lua
+-- shape.lua
 -- Copyright (c) Akatsumekusa
 
 -- ---------------------------------------------------------------------------
@@ -21,3 +21,44 @@
 -- DEALINGS IN THE SOFTWARE.
 -- ---------------------------------------------------------------------------
 
+-- Circular doubly linked list for shape in Aegisub.
+-- Supports line and cubic bézier curve. Note the absence of b-spline curve.
+shape = {
+    prev = nil,
+    next = nil,
+
+    -- An ASS drawing command like this
+    -- m 100 100 l 200 100 b 200 155.23 155.23 200 100 200 l 100 100
+    -- will be parse into four control points like this
+    -- point_1 = {
+    --     prev = point_4,
+    --     next = point_2,
+    --     pos = {x = 100, y = 100}
+    -- }
+    -- point_2 = {
+    --     prev = point_1,
+    --     next = point_3,
+    --     pos = {x = 200, y = 100},
+    --     next_bezier_point = {x = 200, y = 155.23}
+    -- }
+    -- point_3 = {
+    --     prev = point_2,
+    --     next = point_4,
+    --     pos = {x = 100, y = 200},
+    --     last_bezier_point = {x = 155.23, y = 200}
+    -- }
+    -- point_4 = {
+    --     prev = point_3,
+    --     next = point_1,
+    --     pos = {x = 100, y = 100}
+    -- }
+    pos = nil, -- {x = nil, y = nil}
+    last_bezier_point = nil, -- {x = nil, y = nil}
+    next_bezier_point = nil -- {x = nil, y = nil}
+}
+
+function shape:new(o)
+    o = o or {}
+    setmetatable(o, self) self.__index = self
+    return o
+end
